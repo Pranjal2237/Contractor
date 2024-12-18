@@ -2,20 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+:root{
+    --background-normal: #02493b;
+    --background-dark:#0e3c39;
+    --background-light:#1a806b;
+    --btn-color:#ff7033;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.padding-inline{
+    padding-inline: 8rem;
+}
+
+.nav_toggle{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    /* border: 1px solid #d3d3d3; */
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .toggle{
+    width: 80%;
+    height: 5px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    transition: .3s ease;
+    border-radius: 4px;
+  }
+  
+  .toggle:nth-child(1){
+    top: 25%;
+  }
+  
+  .toggle:nth-child(3){
+    top: 75%;
+  }
+  
+  .nav_toggle.active .toggle:nth-child(1){
+    top: 50%;
+    transform: translate(-50%,-50%) rotate(45deg);
+  }
+  
+  .nav_toggle.active .toggle:nth-child(2){
+    opacity: 0;
+  }
+  
+  .nav_toggle.active .toggle:nth-child(3){
+    top: 50%;
+    transform: translate(-50%,-50%) rotate(-45deg);
+  }
+
+@media screen and (max-width:1024px){
+  .padding-inline{
+    padding-inline: 4rem;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+@media screen and (max-width:680px) {
+    .padding-inline{
+      padding-inline: 1rem;
+    }
+  }
