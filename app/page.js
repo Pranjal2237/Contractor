@@ -7,8 +7,8 @@ export default async function page({ searchParams }) {
   let tenantConfig = await searchParams;
   let location = tenantConfig["subname"];
   tenantConfig = tenantConfig["sublength"];
-  if(tenantConfig>=3){
-    tenantConfig=3;
+  if(tenantConfig>=4){
+    tenantConfig=4;
   }
   const regex = new RegExp(`-(?!.*-)`);
   location = location?.replace(regex, ",");
@@ -16,7 +16,7 @@ export default async function page({ searchParams }) {
   const MainComp = tenants[tenantConfig].PageComp;
   return (
     <div>
-      <MainComp location={location} state="Alabama" />
+      <MainComp location={location} />
     </div>
   );
 }
@@ -26,8 +26,8 @@ export async function generateMetadata({searchParams}) {
   let tenantConfig = await searchParams;
   let location = tenantConfig["subname"];
   tenantConfig = tenantConfig["sublength"];
-  if(tenantConfig>=3){
-    tenantConfig=3;
+  if(tenantConfig>=4){
+    tenantConfig=4;
   }
   let title = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
@@ -39,7 +39,7 @@ export async function generateMetadata({searchParams}) {
   {
     location="USA";
   }
-  else if(tenantConfig==2){
+  else if(tenantConfig==3){
     location=states[location]
   }
   title=title.replace("[location]",location);

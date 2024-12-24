@@ -1,13 +1,13 @@
 import { CityPage, HomePage, StatePage } from "@/components";
 
 export const tenants = {
-    1:{
+    2:{
         PageComp:HomePage
     },
-    2: {
+    3: {
         PageComp:StatePage,
     },
-    3: {
+    4: {
         PageComp:CityPage
     },
 };
