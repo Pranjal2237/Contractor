@@ -3,12 +3,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const Testimonials = ({ stateId }) => {
+const Testimonials = ({ stateId,sheetId }) => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     async function allReviews() {
-      let values = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/${stateId}`
+      let origin=window.location.origin;
+      let values = await axios.post(
+        `${origin}/api/reviews/${stateId}`,{
+          sheetId
+        }
       );
       values = values.data;
       setReviews(values);

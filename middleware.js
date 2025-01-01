@@ -1,26 +1,27 @@
 import { NextResponse } from "next/server";
+import axios from "axios";
 
-export function middleware(req) {
-  const response = NextResponse.next();
-  
-  // Enable CORS
-  // response.headers.set('Access-Control-Allow-Origin', '*'); // Allow all origins, or replace '*' with specific domain
-  // response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  // response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  // console.log('Setting CORS headers...',response);
+export async function middleware(req) {
   const host = req.headers.get("host");
   const domainarr = host.split(".");
+  let domainUrl = domainarr[0];
+  if (domainarr?.length > 1) {
+    domainUrl = domainarr[1];
+  }
+  console.log("domainUrl", domainUrl);
   let domainLength = domainarr.length;
   const d = domainarr[0].split("-").length;
   domainLength = domainLength + d - 1;
   const subdomain = domainarr[0];
   const url = req.nextUrl.clone();
+
+  const response = await axios.post(`${url.origin}/api/getSheetId`, {
+    domain: domainUrl,
+  });
+
+  const { sheetId } = response.data;
+  url.searchParams.set("sheetId", sheetId);
   url.searchParams.set("sublength", domainLength);
   url.searchParams.set("subname", subdomain);
   return NextResponse.rewrite(url);
 }
-
-
-// export const config = {
-//   matcher: '/api/:path*',
-// };

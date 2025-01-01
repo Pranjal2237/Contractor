@@ -1,7 +1,8 @@
 import { google } from "googleapis";
 import { NextResponse } from "next/server";
 
-export async function GET(request) {
+export async function POST(request) {
+    const {sheetId}=await request.json();
     const auth=new google.auth.GoogleAuth({
         credentials:{
             client_email:process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -14,7 +15,7 @@ export async function GET(request) {
     const range="faqs!A:B"
     try{
         const response=await sheets.spreadsheets.values.get({
-            spreadsheetId:process.env.GOOGLE_SHEET_ID,
+            spreadsheetId:sheetId,
             range
         })
         let filterdata=response.data.values;

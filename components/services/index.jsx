@@ -5,13 +5,15 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-const Services = () => {
+const Services = ({sheetId}) => {
   const [services, setServices] = useState([]);
   const [phone, setPhone] = useState();
   const [location,setLocation]=useState("");
   useEffect(() => {
     async function allServices() {
   let hostUrl = window.location.hostname;
+  let origin=window.location.origin;
+  console.log("services",origin);
   hostUrl = hostUrl.split(".");
   let locationTemp = hostUrl[0];
   if (locationTemp.includes("-") == false) {
@@ -24,15 +26,19 @@ const Services = () => {
     locationTemp = "Near Me";
   }
   setLocation(locationTemp);
-      let values = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/services`
+      let values = await axios.post(
+        `${origin}/api/services`,{
+          sheetId:sheetId
+        }
       );
       values = values.data;
       values = values.slice(1);
       setServices(values);
       let aboutNumber = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-        { range: "configs!F:F" }
+        `${origin}/api/configs`,
+        { range: "configs!F:F",
+          sheetId:sheetId
+         }
       );
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       setPhone(aboutNumber);

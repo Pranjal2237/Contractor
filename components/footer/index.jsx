@@ -10,19 +10,43 @@ const Footer = () => {
   const [email, setEmail] = useState("");
   useEffect(() => {
     async function allFooterData() {
+      let origin=window.location.origin;
+      let domainUrl=origin.split("//");
+      domainUrl=domainUrl[1];
+      domainUrl=domainUrl.split(".");
+      if(domainUrl.length>2){
+        domainUrl=domainUrl[1]+domainUrl[2];
+      }
+      else if(domainUrl.length==2){
+        domainUrl=domainUrl[1];
+      }
+      else{
+        domainUrl=domainUrl[0];
+      }
+      const response = await axios.post(`${origin}/api/getSheetId`, {
+          domain: domainUrl,
+        });
+        let {sheetId}=response.data
+        console.log("footer",sheetId)
       let aboutLogo = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-        { range: "configs!A:A" }
+        `${origin}/api/configs`,
+        { range: "configs!A:A",
+          sheetId
+         }
       );
       aboutLogo = aboutLogo.data.slice(1)?.[0]?.[0];
       let aboutNumber = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-        { range: "configs!F:F" }
+        `${origin}/api/configs`,
+        { range: "configs!F:F",
+          sheetId
+         }
       );
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       let aboutEmail = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-        { range: "configs!E:E" }
+        `${origin}/api/configs`,
+        { range: "configs!E:E",
+          sheetId
+         }
       );
       aboutEmail = aboutEmail.data.slice(1)?.[0]?.[0];
       setLogo(aboutLogo);

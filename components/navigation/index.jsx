@@ -5,17 +5,29 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-const Navigation = () => {
+const Navigation = ({sheetId}) => {
   const [logo, setLogo] = useState("");
+   const [number, setNumber] = useState("");
   const [open, setOpen] = useState(false);
   useEffect(() => {
     async function allNav() {
+      let origin=window.location.origin;
       let value = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-        { range: "configs!A:A" }
+        `${origin}/api/configs`,
+        { range: "configs!A:A",
+          sheetId:sheetId
+         }
       );
       value = value.data.slice(1)?.[0]?.[0];
+      let aboutNumber = await axios.post(
+              `${origin}/api/configs`,
+              { range: "configs!F:F",
+                sheetId
+               }
+            );
+            aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       setLogo(value);
+      setNumber(aboutNumber);
     }
     allNav();
   }, []);
@@ -41,7 +53,7 @@ const Navigation = () => {
         })}
         <Link href="/">
           <button className="bg-[--btn-color] text-[white] py-4 px-8 rounded-md font-bold hidden sm:block">
-            (607) 305-1964
+            {number}
           </button>
         </Link>
       </ul>

@@ -4,7 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-const About = ({ range, link, subheading }) => {
+const About = ({ range, link, subheading,sheetId }) => {
   const [image, setImage] = useState("");
   const [about, setAbout] = useState("");
   const [location, setLocation] = useState({ city: "", stateId: "" });
@@ -13,6 +13,7 @@ const About = ({ range, link, subheading }) => {
   useEffect(() => {
     async function allAbout() {
       let hostUrl = window.location.hostname;
+      let origin=window.location.origin;
       hostUrl = hostUrl.split(".");
       let locationTemp = hostUrl[0];
       const regex = new RegExp(`-(?!.*-)`);
@@ -21,12 +22,16 @@ const About = ({ range, link, subheading }) => {
       let [city, stateId] = locationTemp?.split(",");
       stateId = stateId?.toUpperCase();
       setLocation({ city, stateId });
-      let aboutData = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/${link}/${stateId}`
+      let aboutData = await axios.post(
+        `${origin}/api/${link}/${stateId}`,{
+          sheetId:sheetId
+        }
       );
       let aboutImage = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-        { range: range }
+        `${origin}/api/configs`,
+        { range: range,
+          sheetId:sheetId
+         }
       );
       aboutImage = aboutImage.data.slice(1)?.[0]?.[0];
       aboutData = aboutData.data;

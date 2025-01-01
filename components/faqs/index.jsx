@@ -4,7 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-const FAQS = ({ city, stateId }) => {
+const FAQS = ({ city, stateId,sheetId }) => {
   const [faqs, setFaqs] = useState([]);
   const [faqImage, setFaqImage] = useState("");
   const [position, setPosition] = useState(0);
@@ -12,20 +12,27 @@ const FAQS = ({ city, stateId }) => {
   let location = `${city}, ${stateId}`;
   useEffect(() => {
     async function allFaqs() {
-      let values = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/faqs`
+      let origin=window.location.origin;
+      let values = await axios.post(
+        `${origin}/api/faqs`,{
+          sheetId:sheetId
+        }
       );
       values = values.data;
       setFaqs(values);
       let aboutLogo = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-        { range: "configs!D:D" }
+        `${origin}/api/configs`,
+        { range: "configs!D:D",
+          sheetId:sheetId
+         }
       );
       aboutLogo = aboutLogo.data.slice(1)?.[0]?.[0];
       setFaqImage(aboutLogo);
       let aboutNumber = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-        { range: "configs!F:F" }
+        `${origin}/api/configs`,
+        { range: "configs!F:F",
+          sheetId
+         }
       );
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       setPhone(aboutNumber);

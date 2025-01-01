@@ -1,31 +1,32 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { contact, location, mail } from "@/public";
 import Image from "next/image";
 
-const Contact = () => {
+const Contact = ({ sheetId }) => {
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [city,setCity]=useState("");
-  const [stateId,setStateId]=useState("");
+  const [city, setCity] = useState("");
+  const [stateId, setStateId] = useState("");
   useEffect(() => {
     let hostUrl = window.location.hostname;
-  hostUrl = hostUrl.split(".");
-  hostUrl=hostUrl[0].split('-');
-  setCity(hostUrl[0]);
-  setStateId(hostUrl[1]);
+    hostUrl = hostUrl.split(".");
+    hostUrl = hostUrl[0].split("-");
+    setCity(hostUrl[0]);
+    setStateId(hostUrl[1]);
     async function allData() {
-      let aboutNumber = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-        { range: "configs!F:F" }
-      );
+      let origin = window.location.origin;
+      let aboutNumber = await axios.post(`${origin}/api/configs`, {
+        range: "configs!F:F",
+        sheetId,
+      });
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
-      let aboutEmail = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-        { range: "configs!E:E" }
-      );
+      let aboutEmail = await axios.post(`${origin}/api/configs`, {
+        range: "configs!E:E",
+        sheetId,
+      });
       aboutEmail = aboutEmail.data.slice(1)?.[0]?.[0];
       setNumber(aboutNumber);
       setEmail(aboutEmail);

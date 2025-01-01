@@ -8,7 +8,8 @@ const CityContainer = ({sheetName}) => {
     const [places,setPlaces]=useState([]);
     useEffect(()=>{
         async function allPlaces() {
-            let values=await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/cities/${sheetName}`)
+            let origin=window.location.origin;
+            let values=await axios.get(`${origin}/api/about/cities/${sheetName}`)
             values=values.data;
             setPlaces(values);
         }
@@ -20,8 +21,10 @@ const CityContainer = ({sheetName}) => {
             places.map((place)=>{
                 let placeLink=place?.toLowerCase();
                 placeLink=placeLink?.replaceAll(' ','-');
+                let origin=window.location.origin;
+                let domainUrl=origin.split("//");
                 return(
-                    <Link key={place} href={`http://${placeLink}-${sheetName}.localhost:3000`}>
+                    <Link key={place} href={`${domainUrl[0]}//${placeLink}-${domainUrl[1]}`}>
                     <div className="flex justify-center items-center border-[#01539F21] border-solid border-[2px] shadow-md">
                         <p className="text-[1.35rem] font-bold text-center my-[1.5rem]">{place}</p>
                     </div>

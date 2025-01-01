@@ -8,8 +8,9 @@ const Banner = ({ heading, subHeading }) => {
   const [phone, setPhone] = useState("");
   useEffect(() => {
       async function allServices() {
+        let origin=window.location.origin;
         let aboutNumber = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
+          `${origin}/api/configs`,
           { range: "configs!F:F" }
         );
         aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
@@ -17,6 +18,7 @@ const Banner = ({ heading, subHeading }) => {
       }
       allServices();
     }, []);
+    subHeading=subHeading.replaceAll("[number]",phone);
   return (
     <div className="bg-[--background-normal] min-h-[115dvh] flex flex-col justify-center">
       <div className="padding-inline max-w-[100%] sm:max-w-[60%]">

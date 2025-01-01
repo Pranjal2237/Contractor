@@ -4,11 +4,14 @@ import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
-const Container = ({sheetName}) => {
+const Container = ({sheetName,sheetId}) => {
     const [places,setPlaces]=useState([]);
     useEffect(()=>{
         async function allPlaces() {
-            let values=await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/about/places/${sheetName}`)
+            let origin=window.location.origin;
+            let values=await axios.post(`${origin}/api/about/places/${sheetName}`,{
+                sheetId:sheetId
+            })
             values=values.data;
             setPlaces(values);
         }
@@ -19,8 +22,10 @@ const Container = ({sheetName}) => {
         {
             places.map(([placeId,place])=>{
                 placeId=placeId?.toLowerCase();
+                let origin=window.location.origin;
+                let domainUrl=origin.split("//");
                 return(
-                    <Link key={placeId} href={`http://${placeId}.localhost:3000`}>
+                    <Link key={placeId} href={`${domainUrl[0]}//${placeId}.${domainUrl[1]}`}>
                     <div className="flex justify-center items-center border-[#01539F21] border-solid border-[2px] shadow-md">
                         <p className="text-[1.35rem] font-bold text-center my-[1.5rem]">{place}</p>
                     </div>

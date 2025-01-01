@@ -3,13 +3,16 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-const Details = ({range}) => {
+const Details = ({range,sheetId}) => {
     const[details,setDetails]=useState([]);
     useEffect(()=>{
         async function allDetails(){
+            let origin=window.location.origin;
             let aboutNumber = await axios.post(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/configs`,
-                { range: range }
+                `${origin}/api/configs`,
+                { range: range,
+                    sheetId:sheetId
+                 }
               );
               aboutNumber = aboutNumber.data.slice(1)?.[0];
               setDetails(aboutNumber);
