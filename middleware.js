@@ -4,11 +4,11 @@ import axios from "axios";
 export async function middleware(req) {
   const host = req.headers.get("host");
   const domainarr = host.split(".");
+  
   let domainUrl = domainarr[0];
   if (domainarr?.length > 1) {
     domainUrl = domainarr[1];
   }
-  console.log("domainUrl", domainUrl);
   let domainLength = domainarr.length;
   const d = domainarr[0].split("-").length;
   domainLength = domainLength + d - 1;
@@ -23,5 +23,6 @@ export async function middleware(req) {
   url.searchParams.set("sheetId", sheetId);
   url.searchParams.set("sublength", domainLength);
   url.searchParams.set("subname", subdomain);
+  url.searchParams.set("url",url?.origin);
   return NextResponse.rewrite(url);
 }
