@@ -5,11 +5,14 @@ import Details from "../details";
 import Container from "../container";
 
 const HomePage = ({ sheetId }) => {
+  const heading=<h1 className="mb-7 font-extrabold text-4xl text-white leading-[5rem] sm:text-7xl">
+  Roofing Contractor near me in <span className='text-[#ff7033]'>USA</span></h1>;
   return (
     <div>
       <Banner
-        heading="Roofing Contractor near me in USA"
+        heading={heading}
         subHeading="Looking for Roofing Contractor services near you? Find reliable and experienced Roofing Repair in the USA."
+        sheetId={sheetId}
       />
       <Details range="configs!S:T" sheetId={sheetId} />
       <div className="padding-inline my-[5rem] bg-[#f7fbff] py-[3rem]">

@@ -1,5 +1,6 @@
 "use client";
 
+import { down, up } from "@/public";
 import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -56,11 +57,14 @@ const FAQS = ({ city, stateId,sheetId }) => {
                 onClick={() => {
                   setPosition(index);
                 }}
-                className="bg-[--background-normal] text-[white] py-4 px-8 rounded-md font-bold cursor-pointer"
+                className="bg-[--background-normal] text-[white] py-4 px-8 rounded-md font-bold cursor-pointer flex justify-between"
               >
                 <h3 className="font-bold mb-[0.5rem] text-l leading-[1.25em] sm:text-xl">
                   {question}
                 </h3>
+                {
+                  index==position ? <Image src={up} width={12} height={12} /> :<Image src={down} width={12} height={12} />
+                }
               </div>
               {index == position && (
                 <p className="mt-[0.5rem] px-8">{answer}</p>

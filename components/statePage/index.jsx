@@ -7,11 +7,15 @@ import { states } from "@/utils";
 const StatePage = ({ location, sheetId }) => {
   let state_id = location;
   location = states[location];
+  const heading=<h1 className="mb-7 font-extrabold text-4xl text-white leading-[5rem] sm:text-7xl">
+  Roofing Contractor near me in <span className='text-[#ff7033]'>{location} Near Me</span></h1>;
   return (
     <div>
       <Banner
-        heading={`Roofing Contractor in ${location} Near Me`}
+        heading={heading}
         subHeading={`Your trusted and local Roofing Contractor in ${location}.`}
+        sheetId={sheetId}
+        prefix="Roofing Contractor"
       />
       <div className="padding-inline my-[5rem]">
         <h2 className="font-extrabold text-center text-4xl leading-[1.25em] sm:text-4xl">{`Professional Roofing Contractor services in ${location}`}</h2>

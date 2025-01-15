@@ -3,7 +3,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(request,{params}) {
     const {sheetId}=await request.json();
-    const searchValue=await params?.stateId?.toUpperCase();
+    let searchValue=await params?.service;
+    searchValue=searchValue.replaceAll("-"," ");
+    console.log(searchValue);
     const auth=new google.auth.GoogleAuth({
         credentials:{
             client_email:process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -17,12 +19,12 @@ export async function POST(request,{params}) {
     try{
         const response=await sheets.spreadsheets.values.get({
             spreadsheetId:sheetId,
-            range:'about!A:D'
+            range:'services!A:C'
         })
         
         const data= response.data.values;
         let filterdata=data.filter((row)=>row[0]==searchValue)
-        filterdata=filterdata[0][3];
+        filterdata=filterdata[0][2];
         return NextResponse.json(filterdata);
     }
     catch(error){

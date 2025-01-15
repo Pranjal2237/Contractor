@@ -1,5 +1,6 @@
 "use client";
 
+import { facebook, instagram, linkedin, twitter } from "@/public";
 import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -8,46 +9,56 @@ const Footer = () => {
   const [logo, setLogo] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
+  const dateValue=new Date();
+  const year=dateValue.getFullYear();
+  let month=dateValue.getMonth();
+  const getFullMonth={
+    0:"January",
+    1:"February",
+    2:"March",
+    3:"April",
+    4:"May",
+    5:"June",
+    6:"July",
+    7:"August",
+    8:"September",
+    9:"October",
+    10:"November",
+    11:"December"
+  }
+  month=getFullMonth[month];
   useEffect(() => {
     async function allFooterData() {
-      let origin=window.location.origin;
-      let domainUrl=origin.split("//");
-      domainUrl=domainUrl[1];
-      domainUrl=domainUrl.split(".");
-      if(domainUrl.length>2){
-        domainUrl=domainUrl[1]+domainUrl[2];
-      }
-      else if(domainUrl.length==2){
-        domainUrl=domainUrl[1];
-      }
-      else{
-        domainUrl=domainUrl[0];
+      let origin = window.location.origin;
+      let domainUrl = origin.split("//");
+      domainUrl = domainUrl[1];
+      domainUrl = domainUrl.split(".");
+      if (domainUrl.length > 2) {
+        domainUrl = domainUrl[1] + domainUrl[2];
+      } else if (domainUrl.length == 2) {
+        domainUrl = domainUrl[1];
+      } else {
+        domainUrl = domainUrl[0];
       }
       const response = await axios.post(`${origin}/api/getSheetId`, {
-          domain: domainUrl,
-        });
-        let {sheetId}=response.data
-        console.log("footer",sheetId)
-      let aboutLogo = await axios.post(
-        `${origin}/api/configs`,
-        { range: "configs!A:A",
-          sheetId
-         }
-      );
+        domain: domainUrl,
+      });
+      let { sheetId } = response.data;
+      console.log("footer", sheetId);
+      let aboutLogo = await axios.post(`${origin}/api/configs`, {
+        range: "configs!A:A",
+        sheetId,
+      });
       aboutLogo = aboutLogo.data.slice(1)?.[0]?.[0];
-      let aboutNumber = await axios.post(
-        `${origin}/api/configs`,
-        { range: "configs!F:F",
-          sheetId
-         }
-      );
+      let aboutNumber = await axios.post(`${origin}/api/configs`, {
+        range: "configs!F:F",
+        sheetId,
+      });
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
-      let aboutEmail = await axios.post(
-        `${origin}/api/configs`,
-        { range: "configs!E:E",
-          sheetId
-         }
-      );
+      let aboutEmail = await axios.post(`${origin}/api/configs`, {
+        range: "configs!E:E",
+        sheetId,
+      });
       aboutEmail = aboutEmail.data.slice(1)?.[0]?.[0];
       setLogo(aboutLogo);
       setNumber(aboutNumber);
@@ -90,12 +101,18 @@ const Footer = () => {
           <p className="text-[1.1rem]">{number}</p>
           <p className="text-[1.1rem]">{email}</p>
           <p className="text-[1.1rem]">08:00am-6:00pm</p>
+          <div className="flex gap-[2rem]">
+            <Image src={facebook} width={10} height={10} />
+            <Image src={instagram} width={15} height={15} />
+            <Image src={twitter} width={15} height={15} />
+            <Image src={linkedin} width={15} height={15} />
+          </div>
         </div>
       </div>
       <div className="padding-inline py-[1rem] bg-[--background-normal] text-white">
-        <p className="w-[40%]">
-          Copyright © Roofing Contractors Near By Kentucky Roofing Contractor
-          Pros November, 2024.
+        <p className="md:w-[40%]">
+          Copyright © <span className='text-[#ff7033]'>Roofing Contractors Near Me</span> By Kentucky Roofing Contractor
+          Pros {month}, {year}.
         </p>
       </div>
     </>
