@@ -9,10 +9,9 @@ const page = async({searchParams}) => {
   return (
    <>
    <Navigation sheetId={sheetId} />
-   <Display heading={`Roofing Contractor Services in `} />
+   <Display sheetId={sheetId} />
      <div className='padding-inline my-[5rem] bg-[#f7fbff]'>
-    <h2 className='font-extrabold text-center text-4xl leading-[1.25em] sm:text-4xl'>Professional Roofing Contractor services Near Me</h2>
-    <Services sheetId={sheetId} />
+    <Services sheetId={sheetId} isLink={true} />
     </div>
    </>
   )

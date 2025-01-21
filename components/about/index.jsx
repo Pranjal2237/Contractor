@@ -9,8 +9,16 @@ const About = ({ range, link, subheading, sheetId }) => {
   const [image, setImage] = useState("");
   const [about, setAbout] = useState("");
   const [location, setLocation] = useState({ city: "", stateId: "" });
+  const [company, setCompany] = useState("");
 
-  const heading = `${location?.city}, ${location?.stateId} Roofing Repair`;
+  let heading=""
+  if(link=="about")
+  {
+    heading = `${location?.city}, ${location?.stateId} ${company}`;
+  }
+  else{
+    heading=`Best ${company} in ${location?.city}, ${location?.stateId}`
+  }
   useEffect(() => {
     async function allAbout() {
       let hostUrl = window.location.hostname;
@@ -32,7 +40,13 @@ const About = ({ range, link, subheading, sheetId }) => {
       });
       aboutImage = aboutImage.data.slice(1)?.[0]?.[0];
       aboutData = aboutData.data;
-      aboutData = aboutData.replaceAll("[location]", "Near Me");
+      aboutData = aboutData.replaceAll("[location]", `${city}, ${stateId}`);
+      let aboutCompany = await axios.post(`${origin}/api/configs`, {
+        range: "configs!G:G",
+        sheetId,
+      });
+      aboutCompany = aboutCompany.data.slice(1)?.[1]?.[0];
+      setCompany(aboutCompany);
       setImage(aboutImage);
       setAbout(aboutData);
     }

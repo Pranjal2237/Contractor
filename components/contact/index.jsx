@@ -10,6 +10,7 @@ const Contact = ({ sheetId }) => {
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [stateId, setStateId] = useState("");
+  const [company,setCompany]=useState("");
   useEffect(() => {
     let hostUrl = window.location.hostname;
     hostUrl = hostUrl.split(".");
@@ -28,6 +29,12 @@ const Contact = ({ sheetId }) => {
         sheetId,
       });
       aboutEmail = aboutEmail.data.slice(1)?.[0]?.[0];
+      let aboutCompany = await axios.post(`${origin}/api/configs`, {
+                  range: "configs!G:G",
+                  sheetId,
+                });
+                aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];
+                setCompany(aboutCompany);
       setNumber(aboutNumber);
       setEmail(aboutEmail);
     }
@@ -51,7 +58,7 @@ const Contact = ({ sheetId }) => {
               Visit Us:
             </h2>
             <p className="mb-[0.5rem] text-xl leading-[1.25em] text-[#666666] text-[16px] sm:text-[18px]">
-              {`${city}, ${stateId} Roofing Contractor, ${stateId}, USA`}
+              {`${city}, ${stateId} ${company}, ${stateId}, USA`}
             </p>
           </div>
         </div>

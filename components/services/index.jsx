@@ -11,6 +11,7 @@ const Services = ({ sheetId, isLink = false }) => {
   const [services, setServices] = useState([]);
   const [phone, setPhone] = useState();
   const [location, setLocation] = useState("");
+  const [company, setCompany] = useState("");
   useEffect(() => {
     async function allServices() {
       let hostUrl = window.location.hostname;
@@ -23,7 +24,12 @@ const Services = ({ sheetId, isLink = false }) => {
       const regex = new RegExp(`-(?!.*-)`);
       locationTemp = locationTemp?.replace(regex, ",");
       locationTemp = locationTemp?.replaceAll("-", " ");
-      if (hostUrl.length == 1) {
+      //for dev
+      // if (hostUrl.length == 1) {
+      //   locationTemp = "Near Me";
+      // }
+      // for prod
+      if (hostUrl.length == 2) {
         locationTemp = "Near Me";
       }
       setLocation(locationTemp);
@@ -39,51 +45,65 @@ const Services = ({ sheetId, isLink = false }) => {
       });
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       setPhone(aboutNumber);
+      let aboutCompany = await axios.post(`${origin}/api/configs`, {
+        range: "configs!G:G",
+        sheetId,
+      });
+      aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];
+      setCompany(aboutCompany);
     }
     allServices();
   }, []);
   return (
-    <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 my-[3rem]">
-      {services && (
-        <>
-          {services.map(([service, metaDescription]) => {
-            let link = service.replaceAll(" ", "-");
-            service = service + " " + location;
-            metaDescription = metaDescription?.replace("[location]", location);
-            metaDescription = metaDescription?.replace("[phone]", phone);
-            return (
-              <div
-                key={service}
-                className="border-[#01539F21] bg-[white] border-solid border-[1px] rounded-lg overflow-hidden px-[3rem] py-[4rem] flex flex-col justify-center items-center"
-              >
-                {isLink ? (
-                  <Link
-                    href={`/services/${link}`}
-                    className="text-[1.35rem] font-bold text-center my-[1.5rem] hover:text-[yellow]"
-                  >
-                    {service}
-                  </Link>
-                ) : (
-                  <h2 className="text-[1.35rem] font-bold text-center my-[1.5rem]">
-                    {service}
-                  </h2>
-                )}
-                <p className="text-center text-[1.1rem]">{metaDescription}</p>
-                <Link
-                  href="tel:(607) 305-1964"
-                  className="flex items-center gap-[1rem] mt-[1.5rem] border-[#01539F21] border-solid border-[2px]  py-4 px-8 rounded-md font-bold"
+    <>
+      <h2 className="font-extrabold text-center text-4xl leading-[1.25em] sm:text-4xl">
+        Professional {company} services {location}
+      </h2>
+      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 my-[3rem]">
+        {services && (
+          <>
+            {services.map(([service, metaDescription], index) => {
+              let link = service.replaceAll(" ", "-");
+              service = service + " " + location;
+              metaDescription = metaDescription?.replace(
+                "[location]",
+                location
+              );
+              metaDescription = metaDescription?.replace("[phone]", phone);
+              return (
+                <div
+                  key={index}
+                  className="border-[#01539F21] bg-[white] border-solid border-[1px] rounded-lg overflow-hidden px-[3rem] py-[4rem] flex flex-col justify-center items-center"
                 >
-                  <button>Get Quotes</button>
-                  <div>
-                    <Image src={arrow} width={15} height={15} />
-                  </div>
-                </Link>
-              </div>
-            );
-          })}
-        </>
-      )}
-    </div>
+                  {isLink ? (
+                    <Link
+                      href={`/services/${link}`}
+                      className="text-[1.35rem] font-bold text-center my-[1.5rem] hover:text-[#ffd600]"
+                    >
+                      {service}
+                    </Link>
+                  ) : (
+                    <h2 className="text-[1.35rem] font-bold text-center my-[1.5rem]">
+                      {service}
+                    </h2>
+                  )}
+                  <p className="text-center text-[1.1rem]">{metaDescription}</p>
+                  <Link
+                    href={`tel:${phone}`}
+                    className="flex items-center gap-[1rem] mt-[1.5rem] border-[#01539F21] border-solid border-[2px]  py-4 px-8 rounded-md font-bold"
+                  >
+                    <button>Get Quotes</button>
+                    <div>
+                      <Image src={arrow} width={15} height={15} />
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

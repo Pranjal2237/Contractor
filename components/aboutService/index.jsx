@@ -39,14 +39,13 @@ const AboutService = ({ sheetId, range }) => {
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       aboutImage = aboutImage.data.slice(1)?.[0]?.[0];
       aboutData = aboutData.data;
-      aboutData = aboutData.replaceAll("[location]", "Near Me");
+      aboutData = aboutData.replaceAll("[location]", `${city}, ${stateId}`);
       aboutData = aboutData.replaceAll("[phone]", aboutNumber);
       setImage(aboutImage);
       setAboutService(aboutData);
     }
     getService();
   }, [service]);
-  console.log("ser", aboutService);
   return (
     <div className="padding-inline pt-[6rem] flex justify-between flex-col gap-8 lg:flex-row">
       <div className="w-[400px] h-[400px] flex-1">

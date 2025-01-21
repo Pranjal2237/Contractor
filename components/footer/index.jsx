@@ -1,14 +1,19 @@
 "use client";
 
-import { facebook, instagram, linkedin, twitter } from "@/public";
+import { facebook, instagram, linkedin, Phone, twitter } from "@/public";
+import { states } from "@/utils";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
+
 
 const Footer = () => {
   const [logo, setLogo] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [location, setLocation] = useState("");
   const dateValue=new Date();
   const year=dateValue.getFullYear();
   let month=dateValue.getMonth();
@@ -33,18 +38,32 @@ const Footer = () => {
       let domainUrl = origin.split("//");
       domainUrl = domainUrl[1];
       domainUrl = domainUrl.split(".");
+      let locationTemp = domainUrl[0];
       if (domainUrl.length > 2) {
-        domainUrl = domainUrl[1] + domainUrl[2];
+        domainUrl = domainUrl[1]+"."+domainUrl[2];
       } else if (domainUrl.length == 2) {
-        domainUrl = domainUrl[1];
+        domainUrl =domainUrl[0]+"."+domainUrl[1];
+        locationTemp = "USA";
       } else {
         domainUrl = domainUrl[0];
       }
+            if (locationTemp.includes("-") == false) {
+              locationTemp = states[locationTemp];
+            }
+            const regex = new RegExp(`-(?!.*-)`);
+            locationTemp = locationTemp?.replace(regex, ",");
+            locationTemp = locationTemp?.replaceAll("-", " ");
+            //for dev
+            
+            // for prod
+            // if (hostUrl.length == 2) {
+            //   locationTemp = "Near Me";
+            // }
+            setLocation(locationTemp);
       const response = await axios.post(`${origin}/api/getSheetId`, {
         domain: domainUrl,
       });
       let { sheetId } = response.data;
-      console.log("footer", sheetId);
       let aboutLogo = await axios.post(`${origin}/api/configs`, {
         range: "configs!A:A",
         sheetId,
@@ -60,6 +79,12 @@ const Footer = () => {
         sheetId,
       });
       aboutEmail = aboutEmail.data.slice(1)?.[0]?.[0];
+      let aboutCompany = await axios.post(`${origin}/api/configs`, {
+              range: "configs!G:G",
+              sheetId,
+            });
+            aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];
+            setCompany(aboutCompany);
       setLogo(aboutLogo);
       setNumber(aboutNumber);
       setEmail(aboutEmail);
@@ -68,12 +93,19 @@ const Footer = () => {
   }, []);
   return (
     <>
+    {
+      number && <Link href={`tel:${number}`} className="fixed bottom-[2rem] right-[1rem]">
+      <div className="w-[50px] h-[50px] bg-[--btn-color] flex justify-center items-center rounded-[50%] ">
+        <Image src={Phone} width={20} height={20} />
+      </div>
+      </Link>
+    }
       <div className="padding-inline text-white py-[4rem] bg-[--background-dark] grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
         <div className="flex flex-col gap-[1rem]">
           <div>
             <Image src={logo} width={150} height={150} alt="image" />
           </div>
-          <p className="text-[1.1rem]">Kentucky Roofing Contractor</p>
+          <p className="text-[1.1rem]">{location} {company}</p>
         </div>
         <div className="flex flex-col gap-[1rem]">
           <h3 className="font-bold mb-[0.5rem] text-4xl leading-[1.25em] sm:text-[24px]">
@@ -97,22 +129,33 @@ const Footer = () => {
           <h3 className="font-bold mb-[0.5rem] text-4xl leading-[1.25em] sm:text-[24px]">
             Contact Info
           </h3>
-          <p className="text-[1.1rem]">Kentucky Roofing Contractor Pros.</p>
-          <p className="text-[1.1rem]">{number}</p>
-          <p className="text-[1.1rem]">{email}</p>
+          <p className="text-[1.1rem]">USA {company} Pros.</p>
+          <Link href={`tel:${number}`}>
+          <p className="text-[1.1rem] hover:text-[#ff7033]">{number}</p>
+          </Link>
+          <Link href={`mailto:${email}`}>
+          <p className="text-[1.1rem] hover:text-[#ff7033]">{email}</p>
+          </Link>
           <p className="text-[1.1rem]">08:00am-6:00pm</p>
           <div className="flex gap-[2rem]">
+            <Link href="/#">
             <Image src={facebook} width={10} height={10} />
+            </Link>
+            <Link href="/#">
             <Image src={instagram} width={15} height={15} />
+            </Link>
+            <Link href="/#">
             <Image src={twitter} width={15} height={15} />
+            </Link>
+            <Link href="/#">
             <Image src={linkedin} width={15} height={15} />
+            </Link>
           </div>
         </div>
       </div>
       <div className="padding-inline py-[1rem] bg-[--background-normal] text-white">
         <p className="md:w-[40%]">
-          Copyright © <span className='text-[#ff7033]'>Roofing Contractors Near Me</span> By Kentucky Roofing Contractor
-          Pros {month}, {year}.
+          Copyright © <span className='text-[#ff7033]'>{company} Near Me</span> By {location} {company} Pros {month}, {year}.
         </p>
       </div>
     </>

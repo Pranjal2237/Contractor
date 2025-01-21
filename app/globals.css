@@ -57,6 +57,14 @@
     transform: translate(-50%,-50%) rotate(-45deg);
   }
 
+  .slick-slide {
+    margin: 2rem 0px; /* Adjust this for desired gap */
+  }
+  
+  .slick-list {
+    margin: 0 -10px;
+  }
+
 @media screen and (max-width:1024px){
   .padding-inline{
     padding-inline: 4rem;

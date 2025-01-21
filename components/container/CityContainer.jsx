@@ -4,7 +4,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
-const CityContainer = ({sheetName}) => {
+const CityContainer = ({sheetName,isCity=false}) => {
     const [places,setPlaces]=useState([]);
     useEffect(()=>{
         async function allPlaces() {
@@ -16,9 +16,27 @@ const CityContainer = ({sheetName}) => {
         allPlaces();
     },[])
   return (
-    <div className="my-[3rem] grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <>
         {
-            places.map((place)=>{
+            isCity ?<div className="flex mt-[1rem]">
+        {
+            places.slice(0,12).map((place)=>{
+                let placeLink=place?.toLowerCase();
+                placeLink=placeLink?.replaceAll(' ','-');
+                let origin=window.location.origin;
+                let domainUrl=origin.split("//");
+                let dummyUrl=domainUrl[1].split("-");
+                dummyUrl=dummyUrl[domainUrl.length-1];
+                return(
+                    <Link key={place} href={`${domainUrl[0]}//${placeLink}-${dummyUrl}`}>
+                        <p className="text-[1.1rem] my-[1.5rem] px-[1rem] border-r text-[#007cfb]">{place}</p>
+                    </Link>
+                )
+            })
+        }
+    </div> : <div className="my-[3rem] grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        {
+              places.map((place)=>{
                 let placeLink=place?.toLowerCase();
                 placeLink=placeLink?.replaceAll(' ','-');
                 let origin=window.location.origin;
@@ -33,6 +51,8 @@ const CityContainer = ({sheetName}) => {
             })
         }
     </div>
+        }
+    </>
   )
 }
 

@@ -9,7 +9,7 @@ const page = async ({ searchParams }) => {
   return (
     <div>
       <Navigation sheetId={sheetId} />
-      <Display heading="Contact Us" />
+      <Display heading="Contact Us" sheetId={sheetId} />
       <Contact sheetId={sheetId} />
     </div>
   );

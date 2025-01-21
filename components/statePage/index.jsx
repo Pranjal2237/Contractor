@@ -1,29 +1,46 @@
-import React from "react";
+"use client"
+
+import React, { useEffect, useState } from "react";
 import Banner from "../banner";
 import Services from "../services";
 import CityContainer from "../container/CityContainer";
 import { states } from "@/utils";
+import axios from "axios";
+import Counter from "../counter";
 
 const StatePage = ({ location, sheetId }) => {
+  const [company,setCompany]=useState("");
+    useEffect(()=>{
+      async function allServices() {
+            let origin = window.location.origin;
+            let aboutCompany = await axios.post(`${origin}/api/configs`, {
+              range: "configs!G:G",
+              sheetId,
+            });
+            aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];
+            setCompany(aboutCompany);
+          }
+          allServices();
+    },[])
   let state_id = location;
   location = states[location];
   const heading=<h1 className="mb-7 font-extrabold text-4xl text-white leading-[5rem] sm:text-7xl">
-  Roofing Contractor near me in <span className='text-[#ff7033]'>{location} Near Me</span></h1>;
+  {company} near me in <span className='text-[#ff7033]'>{location} Near Me</span></h1>;
   return (
     <div>
       <Banner
         heading={heading}
-        subHeading={`Your trusted and local Roofing Contractor in ${location}.`}
+        subHeading={`Your trusted and local ${company} in ${location}.`}
         sheetId={sheetId}
-        prefix="Roofing Contractor"
+        prefix={`${company} Pros`}
       />
+      <Counter />
       <div className="padding-inline my-[5rem]">
-        <h2 className="font-extrabold text-center text-4xl leading-[1.25em] sm:text-4xl">{`Professional Roofing Contractor services in ${location}`}</h2>
         <Services location={location} sheetId={sheetId} />
       </div>
       <div className="padding-inline my-[5rem] bg-[#f7fbff] py-[3rem]">
         <h2 className="font-extrabold text-center text-4xl leading-[1.25em] sm:text-4xl">
-          Providing Roofing Contractor services in Whole State
+          Providing {company} services in Whole State
         </h2>
         <div className="py-[3rem]">
           <iframe

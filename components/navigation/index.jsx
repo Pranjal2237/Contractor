@@ -47,11 +47,11 @@ const Navigation = ({sheetId}) => {
         ].map(({ name, link }) => {
           return (
             <Link href={link} key={name}>
-              <li>{name}</li>
+              <li className="hover:text-[#ff7033]">{name}</li>
             </Link>
           );
         })}
-        <Link href="/">
+        <Link href={`tel:${number}`}>
           <button className="bg-[--btn-color] text-[white] py-4 px-8 rounded-md font-bold hidden sm:block">
             {number}
           </button>
