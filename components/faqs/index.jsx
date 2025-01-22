@@ -23,7 +23,7 @@ const FAQS = ({ city, stateId,sheetId }) => {
       setFaqs(values);
       let aboutLogo = await axios.post(
         `${origin}/api/configs`,
-        { range: "configs!D:D",
+        { range: "Snapshot - configs!D:D",
           sheetId:sheetId
          }
       );
@@ -31,7 +31,7 @@ const FAQS = ({ city, stateId,sheetId }) => {
       setFaqImage(aboutLogo);
       let aboutNumber = await axios.post(
         `${origin}/api/configs`,
-        { range: "configs!F:F",
+        { range: "Snapshot - configs!F:F",
           sheetId
          }
       );

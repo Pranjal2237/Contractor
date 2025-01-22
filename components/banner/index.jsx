@@ -13,12 +13,12 @@ const Banner = ({ heading, subHeading, sheetId, prefix }) => {
     async function allServices() {
       let origin = window.location.origin;
       let aboutNumber = await axios.post(`${origin}/api/configs`, {
-        range: "configs!F:F",
+        range: "Snapshot - configs!F:F",
         sheetId,
       });
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       let aboutCompany = await axios.post(`${origin}/api/configs`, {
-        range: "configs!G:G",
+        range: "Snapshot - configs!G:G",
         sheetId,
       });
       aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];
@@ -28,7 +28,8 @@ const Banner = ({ heading, subHeading, sheetId, prefix }) => {
     allServices();
   }, []);
   subHeading=subHeading.replaceAll("[company]",company);
-  subHeading = subHeading?.replaceAll("[number]", phone);
+  subHeading=subHeading.replaceAll("[zip]","");
+  subHeading=subHeading.replaceAll("[phone]",phone);
   return (
     <div className="bg-[--background-normal] min-h-[115dvh] flex flex-col justify-center">
       <div className="padding-inline max-w-[100%] sm:max-w-[60%]">

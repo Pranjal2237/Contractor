@@ -17,7 +17,7 @@ export async function POST(request,{params}) {
     try{
         const response=await sheets.spreadsheets.values.get({
             spreadsheetId:sheetId,
-            range:'why!A:D'
+            range:'Snapshot - why!A:D'
         })
         
         const data= response.data.values;

@@ -14,7 +14,7 @@ const StatePage = ({ location, sheetId }) => {
       async function allServices() {
             let origin = window.location.origin;
             let aboutCompany = await axios.post(`${origin}/api/configs`, {
-              range: "configs!G:G",
+              range: "Snapshot - configs!G:G",
               sheetId,
             });
             aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];

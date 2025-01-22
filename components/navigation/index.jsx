@@ -14,14 +14,14 @@ const Navigation = ({sheetId}) => {
       let origin=window.location.origin;
       let value = await axios.post(
         `${origin}/api/configs`,
-        { range: "configs!A:A",
+        { range: "Snapshot - configs!A:A",
           sheetId:sheetId
          }
       );
       value = value.data.slice(1)?.[0]?.[0];
       let aboutNumber = await axios.post(
               `${origin}/api/configs`,
-              { range: "configs!F:F",
+              { range: "Snapshot - configs!F:F",
                 sheetId
                }
             );

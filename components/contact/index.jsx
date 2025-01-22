@@ -20,17 +20,17 @@ const Contact = ({ sheetId }) => {
     async function allData() {
       let origin = window.location.origin;
       let aboutNumber = await axios.post(`${origin}/api/configs`, {
-        range: "configs!F:F",
+        range: "Snapshot - configs!F:F",
         sheetId,
       });
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       let aboutEmail = await axios.post(`${origin}/api/configs`, {
-        range: "configs!E:E",
+        range: "Snapshot - configs!E:E",
         sheetId,
       });
       aboutEmail = aboutEmail.data.slice(1)?.[0]?.[0];
       let aboutCompany = await axios.post(`${origin}/api/configs`, {
-                  range: "configs!G:G",
+                  range: "Snapshot - configs!G:G",
                   sheetId,
                 });
                 aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];

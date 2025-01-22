@@ -12,7 +12,7 @@ export async function POST(request) {
     })
 
     const sheets=google.sheets({version:"v4",auth:await auth.getClient()})
-    const range="services!A:C"
+    const range="Snapshot - services!A:C"
     try{
         const response=await sheets.spreadsheets.values.get({
             spreadsheetId:sheetId,

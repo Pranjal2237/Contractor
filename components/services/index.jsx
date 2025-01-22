@@ -40,13 +40,13 @@ const Services = ({ sheetId, isLink = false }) => {
       values = values.slice(1);
       setServices(values);
       let aboutNumber = await axios.post(`${origin}/api/configs`, {
-        range: "configs!F:F",
+        range: "Snapshot - configs!F:F",
         sheetId: sheetId,
       });
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       setPhone(aboutNumber);
       let aboutCompany = await axios.post(`${origin}/api/configs`, {
-        range: "configs!G:G",
+        range: "Snapshot - configs!G:G",
         sheetId,
       });
       aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];

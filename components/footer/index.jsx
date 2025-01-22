@@ -14,6 +14,7 @@ const Footer = () => {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [location, setLocation] = useState("");
+  const [url,setUrl]=useState("");
   const dateValue=new Date();
   const year=dateValue.getFullYear();
   let month=dateValue.getMonth();
@@ -65,22 +66,22 @@ const Footer = () => {
       });
       let { sheetId } = response.data;
       let aboutLogo = await axios.post(`${origin}/api/configs`, {
-        range: "configs!A:A",
+        range: "Snapshot - configs!A:A",
         sheetId,
       });
       aboutLogo = aboutLogo.data.slice(1)?.[0]?.[0];
       let aboutNumber = await axios.post(`${origin}/api/configs`, {
-        range: "configs!F:F",
+        range: "Snapshot - configs!F:F",
         sheetId,
       });
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       let aboutEmail = await axios.post(`${origin}/api/configs`, {
-        range: "configs!E:E",
+        range: "Snapshot - configs!E:E",
         sheetId,
       });
       aboutEmail = aboutEmail.data.slice(1)?.[0]?.[0];
       let aboutCompany = await axios.post(`${origin}/api/configs`, {
-              range: "configs!G:G",
+              range: "Snapshot - configs!G:G",
               sheetId,
             });
             aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];
@@ -88,6 +89,7 @@ const Footer = () => {
       setLogo(aboutLogo);
       setNumber(aboutNumber);
       setEmail(aboutEmail);
+      setUrl(domainUrl);
     }
     allFooterData();
   }, []);
@@ -155,7 +157,7 @@ const Footer = () => {
       </div>
       <div className="padding-inline py-[1rem] bg-[--background-normal] text-white">
         <p className="md:w-[40%]">
-          Copyright © <span className='text-[#ff7033]'>{company} Near Me</span> By {location} {company} Pros {month}, {year}.
+          Copyright © <Link href={`https://${url}`}><span className='text-[#ff7033]'>{company} Near Me</span></Link> By {location} {company} Pros {month}, {year}.
         </p>
       </div>
     </>

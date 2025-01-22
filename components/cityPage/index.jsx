@@ -25,17 +25,17 @@ const CityPage = ({ location, sheetId }) => {
     async function allServices() {
       let origin = window.location.origin;
       let aboutCompany = await axios.post(`${origin}/api/configs`, {
-        range: "configs!G:G",
+        range: "Snapshot - configs!G:G",
         sheetId,
       });
       aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];
       let aboutHeading = await axios.post(`${origin}/api/configs`, {
-        range: "configs!I:I",
+        range: "Snapshot - configs!I:I",
         sheetId,
       });
       aboutHeading = aboutHeading.data.slice(1)?.[0]?.[0];
       let aboutSubHeading = await axios.post(`${origin}/api/configs`, {
-        range: "configs!K:K",
+        range: "Snapshot - configs!K:K",
         sheetId,
       });
       aboutSubHeading = aboutSubHeading.data.slice(1)?.[0]?.[0];
@@ -68,7 +68,7 @@ const CityPage = ({ location, sheetId }) => {
         subHeading={citySubHeading}
       />
       <About
-        range="configs!B:B"
+        range="Snapshot - configs!B:B"
         link="about"
         subheading="Who We Are"
         sheetId={sheetId}
@@ -78,7 +78,7 @@ const CityPage = ({ location, sheetId }) => {
       </div>
       <Counter />
       <About
-        range="configs!C:C"
+        range="Snapshot - configs!C:C"
         link="why"
         subheading="Why Choose Us"
         sheetId={sheetId}

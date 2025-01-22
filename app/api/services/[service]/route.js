@@ -19,12 +19,12 @@ export async function POST(request,{params}) {
     try{
         const response=await sheets.spreadsheets.values.get({
             spreadsheetId:sheetId,
-            range:'services!A:C'
+            range:'Snapshot - services!A:C'
         })
         
         const data= response.data.values;
         let filterdata=data.filter((row)=>row[0]==searchValue)
-        filterdata=filterdata[0][2];
+        filterdata=filterdata[0];
         return NextResponse.json(filterdata);
     }
     catch(error){

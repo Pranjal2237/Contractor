@@ -14,7 +14,7 @@ const HomePage = ({ sheetId }) => {
     async function allServices() {
           let origin = window.location.origin;
           let aboutCompany = await axios.post(`${origin}/api/configs`, {
-            range: "configs!G:G",
+            range: "Snapshot - configs!G:G",
             sheetId,
           });
           aboutCompany = aboutCompany.data.slice(1)?.[0]?.[0];
@@ -32,7 +32,7 @@ const HomePage = ({ sheetId }) => {
         sheetId={sheetId}
       />
       <Counter />
-      <Details range="configs!S:T" sheetId={sheetId} />
+      <Details range="Snapshot - configs!S:T" sheetId={sheetId} />
       <div className="padding-inline my-[5rem] bg-[#f7fbff] py-[3rem]">
         <Services sheetId={sheetId} />
       </div>
@@ -42,7 +42,7 @@ const HomePage = ({ sheetId }) => {
         </h2>
         <Container sheetName="about" sheetId={sheetId} />
       </div>
-      <Details range="configs!U:V" sheetId={sheetId} />
+      <Details range="Snapshot - configs!U:V" sheetId={sheetId} />
     </div>
   );
 };

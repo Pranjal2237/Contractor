@@ -42,7 +42,7 @@ const About = ({ range, link, subheading, sheetId }) => {
       aboutData = aboutData.data;
       aboutData = aboutData.replaceAll("[location]", `${city}, ${stateId}`);
       let aboutCompany = await axios.post(`${origin}/api/configs`, {
-        range: "configs!G:G",
+        range: "Snapshot - configs!G:G",
         sheetId,
       });
       aboutCompany = aboutCompany.data.slice(1)?.[1]?.[0];

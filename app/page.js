@@ -36,24 +36,24 @@ export async function generateMetadata({searchParams}) {
   }
   let title = await axios.post(
     `http://${url}/api/configs`,
-    { range: "configs!I:I",
+    { range: "Snapshot - configs!I:I",
       sheetId
      }
   );
   title = title?.data?.slice(1)?.[0]?.[0];
   let logo = await axios.post(
     `http://${url}/api/configs`,
-    { range: "configs!A:A",
+    { range: "Snapshot - configs!A:A",
       sheetId
      }
   );
   logo = logo?.data?.slice(1)?.[0]?.[0];
   title=title.replace("[zip]","");
-  if(tenantConfig==2)
+  if(tenantConfig==1)
   {
     location="USA";
   }
-  else if(tenantConfig==3){
+  else if(tenantConfig==2){
     location=states[location]
   }
   title=title.replace("[location]",location);

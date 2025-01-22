@@ -10,9 +10,7 @@ const AboutService = ({ sheetId, range }) => {
   const [aboutService, setAboutService] = useState("");
   const [image, setImage] = useState("");
   const [location, setLocation] = useState({ city: "", stateId: "" });
-  const heading = `Best ${service.replaceAll("-", " ")} in ${location.city}, ${
-    location.stateId
-  }`;
+  const [mainHeading,setMainHeading]=useState("");
   useEffect(() => {
     async function getService() {
       let hostUrl = window.location.hostname;
@@ -33,12 +31,14 @@ const AboutService = ({ sheetId, range }) => {
         sheetId: sheetId,
       });
       let aboutNumber = await axios.post(`${origin}/api/configs`, {
-        range: "configs!F:F",
+        range: "Snapshot - configs!F:F",
         sheetId,
       });
       aboutNumber = aboutNumber.data.slice(1)?.[0]?.[0];
       aboutImage = aboutImage.data.slice(1)?.[0]?.[0];
       aboutData = aboutData.data;
+      setMainHeading(aboutData[0])
+      aboutData=aboutData[2];
       aboutData = aboutData.replaceAll("[location]", `${city}, ${stateId}`);
       aboutData = aboutData.replaceAll("[phone]", aboutNumber);
       setImage(aboutImage);
@@ -53,7 +53,8 @@ const AboutService = ({ sheetId, range }) => {
       </div>
       <div className="flex-1 text-[1.1rem]">
         <h2 className="font-bold mb-[0.75rem] text-4xl leading-[1.25em] sm:text-4xl">
-          {heading}
+          Best {mainHeading} in {location.city},{" "}
+          {location.stateId}
         </h2>
         <p>{aboutService}</p>
       </div>

@@ -12,14 +12,14 @@ const page = async ({ searchParams }) => {
       <Navigation sheetId={sheetId} />
       <Display heading="About Us" sheetId={sheetId} />
       <About
-        range="configs!B:B"
+        range="Snapshot - configs!B:B"
         link="about"
         subheading="Who We Are"
         sheetId={sheetId}
       />
       <Counter />
       <About
-        range="configs!C:C"
+        range="Snapshot - configs!C:C"
         link="why"
         subheading="Why Choose Us"
         sheetId={sheetId}
