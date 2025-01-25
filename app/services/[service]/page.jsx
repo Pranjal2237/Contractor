@@ -15,7 +15,7 @@ const page = async ({ searchParams }) => {
       <Display sheetId={sheetId} isNumber={true} isSubHeading={true} />
       <AboutService sheetId={sheetId} range="Snapshot - configs!B:B" />
       <div className="padding-inline my-[5rem] bg-[#f7fbff]">
-        <Services sheetId={sheetId} isLink={true} />
+        <Services sheetId={sheetId} isLink={true} isLocation={false} />
       </div>
     </>
   );

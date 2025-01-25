@@ -69,7 +69,7 @@ const Display = ({ heading ="",sheetId ,isNumber=false,isSubHeading=false }) => 
                     <p className="leading-[2rem] text-white tracking-wide text-md sm:text-lg">
                       {location} {company} Pros
                     </p>
-                    <Image src={shape} className="absolute top-[-1rem] left-[3%]" />
+                    <Image src={shape} alt="/" className="absolute top-[-1rem] left-[3%]" />
                   </div> :<div className="w-[5%] h-[6px] bg-[yellow] mt-[5rem]"></div>
       }
       {
@@ -88,7 +88,7 @@ const Display = ({ heading ="",sheetId ,isNumber=false,isSubHeading=false }) => 
       }
       {phone && (
           <Link href={`tel:${phone}`} className="w-[max-content] bg-[--btn-color] text-[white] py-4 px-8 rounded-md font-bold flex gap-[1rem]">
-          <Image src={Phone} width={20} height={20} />
+          <Image src={Phone} alt="/" width={20} height={20} />
             <button >
               {phone}
             </button>

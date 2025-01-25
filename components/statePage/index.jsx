@@ -25,7 +25,7 @@ const StatePage = ({ location, sheetId }) => {
   let state_id = location;
   location = states[location];
   const heading=<h1 className="mb-7 font-extrabold text-4xl text-white leading-[5rem] sm:text-7xl">
-  {company} near me in <span className='text-[#ff7033]'>{location} Near Me</span></h1>;
+  {company} in <span className='text-[#ff7033]'>{location} Near Me</span></h1>;
   return (
     <div>
       <Banner
@@ -40,7 +40,7 @@ const StatePage = ({ location, sheetId }) => {
       </div>
       <div className="padding-inline my-[5rem] bg-[#f7fbff] py-[3rem]">
         <h2 className="font-extrabold text-center text-4xl leading-[1.25em] sm:text-4xl">
-          Providing {company} services in Whole State
+          Providing {company} Services in Whole State
         </h2>
         <div className="py-[3rem]">
           <iframe

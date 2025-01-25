@@ -28,7 +28,7 @@ const HomePage = ({ sheetId }) => {
     <div>
       <Banner
         heading={heading}
-        subHeading="Looking for [company] services near you? Find reliable and experienced Roofing Repair in the USA."
+        subHeading="Looking for [company] services near you? Find reliable and experienced [company] in the USA."
         sheetId={sheetId}
       />
       <Counter />
@@ -38,7 +38,7 @@ const HomePage = ({ sheetId }) => {
       </div>
       <div className="padding-inline my-[5rem] bg-[#f7fbff] py-[3rem]">
         <h2 className="font-extrabold text-center text-4xl leading-[1.25em] sm:text-4xl">
-          Serving {company} services Nation Wide
+          Serving {company} Services Nation Wide
         </h2>
         <Container sheetName="about" sheetId={sheetId} />
       </div>

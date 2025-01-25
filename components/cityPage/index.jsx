@@ -74,7 +74,7 @@ const CityPage = ({ location, sheetId }) => {
         sheetId={sheetId}
       />
       <div className="padding-inline my-[5rem] bg-[#f7fbff] py-[3rem]">
-        <Services sheetId={sheetId} isLink={true} />
+        <Services sheetId={sheetId} isLink={true} isLocation={false} />
       </div>
       <Counter />
       <About

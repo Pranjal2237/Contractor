@@ -36,7 +36,7 @@ export async function generateMetadata({searchParams}) {
   }
   let title = await axios.post(
     `http://${url}/api/configs`,
-    { range: "Snapshot - configs!I:I",
+    { range: "Snapshot - configs!H:H",
       sheetId
      }
   );

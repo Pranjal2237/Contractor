@@ -1,6 +1,6 @@
 "use client";
 
-import { facebook, instagram, linkedin, Phone, twitter } from "@/public";
+import { call, clock, Email, facebook, instagram, linkedin, Loc, Phone, twitter } from "@/public";
 import { states } from "@/utils";
 import axios from "axios";
 import Image from "next/image";
@@ -98,7 +98,7 @@ const Footer = () => {
     {
       number && <Link href={`tel:${number}`} className="fixed bottom-[2rem] right-[1rem]">
       <div className="w-[50px] h-[50px] bg-[--btn-color] flex justify-center items-center rounded-[50%] ">
-        <Image src={Phone} width={20} height={20} />
+        <Image src={Phone} alt="/" width={20} height={20} />
       </div>
       </Link>
     }
@@ -108,6 +108,45 @@ const Footer = () => {
             <Image src={logo} width={150} height={150} alt="image" />
           </div>
           <p className="text-[1.1rem]">{location} {company}</p>
+        </div>
+        <div className="flex flex-col gap-[1rem]">
+          <h3 className="font-bold mb-[0.5rem] text-4xl leading-[1.25em] sm:text-[24px]">
+            Contact Info
+          </h3>
+          <div className="flex gap-[1rem]">
+            <Image src={Loc} alt="/" width={15} height={15} />
+            <p className="text-[1.1rem]">USA {company} Pros.</p>
+          </div>
+          <div className="flex gap-[1rem]">
+            <Image src={call} alt="/" width={15} height={15} />
+            <Link href={`tel:${number}`}>
+          <p className="text-[1.1rem] hover:text-[#ff7033]">{number}</p>
+          </Link>
+          </div>
+          <div className="flex gap-[1rem]">
+            <Image src={Email} alt="/" width={15} height={15} />
+            <Link href={`mailto:${email}`}>
+          <p className="text-[1.1rem] hover:text-[#ff7033]">{email}</p>
+          </Link>
+          </div>
+          <div className="flex gap-[1rem]">
+            <Image src={clock} alt="/" width={15} height={15} />
+            <p className="text-[1.1rem]">08:00am-6:00pm</p>
+          </div>
+          <div className="flex gap-[2rem]">
+            <Link href="/#">
+            <Image alt="/" src={facebook} width={10} height={10} />
+            </Link>
+            <Link href="/#">
+            <Image alt="/" src={instagram} width={15} height={15} />
+            </Link>
+            <Link href="/#">
+            <Image alt="/" src={twitter} width={15} height={15} />
+            </Link>
+            <Link href="/#">
+            <Image alt="/" src={linkedin} width={15} height={15} />
+            </Link>
+          </div>
         </div>
         <div className="flex flex-col gap-[1rem]">
           <h3 className="font-bold mb-[0.5rem] text-4xl leading-[1.25em] sm:text-[24px]">
@@ -126,33 +165,6 @@ const Footer = () => {
           <button className="bg-[--btn-color] text-[white] py-4 px-8 rounded-md font-bold">
             Subscribe Now
           </button>
-        </div>
-        <div className="flex flex-col gap-[1rem] items-end">
-          <h3 className="font-bold mb-[0.5rem] text-4xl leading-[1.25em] sm:text-[24px]">
-            Contact Info
-          </h3>
-          <p className="text-[1.1rem]">USA {company} Pros.</p>
-          <Link href={`tel:${number}`}>
-          <p className="text-[1.1rem] hover:text-[#ff7033]">{number}</p>
-          </Link>
-          <Link href={`mailto:${email}`}>
-          <p className="text-[1.1rem] hover:text-[#ff7033]">{email}</p>
-          </Link>
-          <p className="text-[1.1rem]">08:00am-6:00pm</p>
-          <div className="flex gap-[2rem]">
-            <Link href="/#">
-            <Image src={facebook} width={10} height={10} />
-            </Link>
-            <Link href="/#">
-            <Image src={instagram} width={15} height={15} />
-            </Link>
-            <Link href="/#">
-            <Image src={twitter} width={15} height={15} />
-            </Link>
-            <Link href="/#">
-            <Image src={linkedin} width={15} height={15} />
-            </Link>
-          </div>
         </div>
       </div>
       <div className="padding-inline py-[1rem] bg-[--background-normal] text-white">

@@ -16,24 +16,24 @@ const Counter = () => {
       {[
         {
           image: service,
-          end: 15000,
+          end: 8756,
           heading: "Services Provider",
         },
         {
           image: order,
-          end: 20000,
+          end: 9871,
           heading: "Order Served",
         },
         {
           image: star,
-          end: 30000,
+          end: 12953,
           heading: "5 Star Received",
         },
       ].map(({ image, end, heading }, index) => {
         return (
           <div className="flex gap-[1rem]" key={index}>
             <div>
-              <Image src={image} width={60} />
+              <Image src={image} alt="/" width={60} />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-[white] sm:text-4xl">

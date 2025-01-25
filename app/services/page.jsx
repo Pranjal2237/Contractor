@@ -1,6 +1,7 @@
 import { Navigation } from '@/components';
 import Display from '@/components/display';
 import Services from '@/components/services'
+import axios from 'axios';
 import React from 'react'
 
 const page = async({searchParams}) => {
@@ -11,7 +12,7 @@ const page = async({searchParams}) => {
    <Navigation sheetId={sheetId} />
    <Display sheetId={sheetId} />
      <div className='padding-inline my-[5rem] bg-[#f7fbff]'>
-    <Services sheetId={sheetId} isLink={true} />
+    <Services sheetId={sheetId} isLink={true} isLocation={false} />
     </div>
    </>
   )
@@ -19,8 +20,31 @@ const page = async({searchParams}) => {
 
 export default page;
 
-export function generateMetadata({params}){
-  return{
-    title:"Our Services"
-  }
+export async function generateMetadata({searchParams}) {
+  let tenantConfig = await searchParams;
+  let location = tenantConfig["subname"];
+  let url=tenantConfig["url"];
+  let sheetId=tenantConfig["sheetId"];
+  tenantConfig = tenantConfig["sublength"];
+  let heading = await axios.post(
+    `http://${url}/api/configs`,
+    { range: "Snapshot - configs!G:G",
+      sheetId
+     }
+  );
+  heading = heading?.data.slice(1)?.[0]?.[0];
+  let logo = await axios.post(
+    `http://${url}/api/configs`,
+    { range: "Snapshot - configs!A:A",
+      sheetId
+     }
+  );
+  logo = logo?.data?.slice(1)?.[0]?.[0];
+  let title=`Our ${heading} Services in ${location}`
+  return {
+    title: `${title}`,
+    icons:{
+      icon:logo
+    }
+  };
 }

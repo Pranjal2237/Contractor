@@ -5,7 +5,7 @@ export async function POST(request,{params}) {
     const {sheetId}=await request.json();
     let searchValue=await params?.service;
     searchValue=searchValue.replaceAll("-"," ");
-    console.log(searchValue);
+    
     const auth=new google.auth.GoogleAuth({
         credentials:{
             client_email:process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -23,7 +23,7 @@ export async function POST(request,{params}) {
         })
         
         const data= response.data.values;
-        let filterdata=data.filter((row)=>row[0]==searchValue)
+        let filterdata=data.filter((row)=>row[0].toLowerCase()==searchValue)
         filterdata=filterdata[0];
         return NextResponse.json(filterdata);
     }

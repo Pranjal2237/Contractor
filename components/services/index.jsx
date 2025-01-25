@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-const Services = ({ sheetId, isLink = false }) => {
+const Services = ({ sheetId, isLink = false,isLocation=true }) => {
   const [services, setServices] = useState([]);
   const [phone, setPhone] = useState();
   const [location, setLocation] = useState("");
@@ -57,14 +57,15 @@ const Services = ({ sheetId, isLink = false }) => {
   return (
     <>
       <h2 className="font-extrabold text-center text-4xl leading-[1.25em] sm:text-4xl">
-        Professional {company} services {location}
+        Professional {company} Services {location}
       </h2>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 my-[3rem]">
         {services && (
           <>
             {services.map(([service, metaDescription], index) => {
               let link = service.replaceAll(" ", "-");
-              service = service + " " + location;
+              link=link.toLowerCase();
+              service = isLocation?service + " " + location:service;
               metaDescription = metaDescription?.replace(
                 "[location]",
                 location
@@ -90,11 +91,11 @@ const Services = ({ sheetId, isLink = false }) => {
                   <p className="text-center text-[1.1rem]">{metaDescription}</p>
                   <Link
                     href={`tel:${phone}`}
-                    className="flex items-center gap-[1rem] mt-[1.5rem] border-[#01539F21] border-solid border-[2px]  py-4 px-8 rounded-md font-bold"
+                    className="flex items-center gap-[1rem] mt-[1.5rem] border-[#01539F21] border-solid border-[2px]  py-4 px-8 rounded-md font-bold hover:bg-[#ffd600]"
                   >
                     <button>Get Quotes</button>
                     <div>
-                      <Image src={arrow} width={15} height={15} />
+                      <Image src={arrow} width={15} height={15} alt="/" />
                     </div>
                   </Link>
                 </div>

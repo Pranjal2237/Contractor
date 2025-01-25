@@ -2,9 +2,6 @@
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const Testimonials = ({ stateId, sheetId, city }) => {
   const [reviews, setReviews] = useState([]);
@@ -35,9 +32,8 @@ const Testimonials = ({ stateId, sheetId, city }) => {
       <h2 className="font-bold mb-[0.75rem] text-4xl text-[white] text-center leading-[1.25em] sm:text-4xl">
         What Our Clients Say About Us
       </h2>
-      <div >
-        <Slider {...settings}>
-        {reviews.map((review) => {
+      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 my-[3rem]">
+      {reviews.slice(0,3).map((review) => {
           review = review.replaceAll("[location]", `${city},${stateId}`);
           return (
             <div
@@ -48,7 +44,6 @@ const Testimonials = ({ stateId, sheetId, city }) => {
             </div>
           );
         })}
-        </Slider>
       </div>
     </div>
   );

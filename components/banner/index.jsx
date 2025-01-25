@@ -38,7 +38,7 @@ const Banner = ({ heading, subHeading, sheetId, prefix }) => {
             <p className="leading-[2rem] text-white tracking-wide text-md sm:text-lg">
               {prefix}
             </p>
-            <Image src={shape} className="absolute top-[-1rem] left-[3%]" />
+            <Image src={shape} alt="/" className="absolute top-[-1rem] left-[3%]" />
           </div>
         )}
         {heading}
@@ -47,7 +47,7 @@ const Banner = ({ heading, subHeading, sheetId, prefix }) => {
         </p>
         {phone && (
           <Link href={`tel:${phone}`} className="w-[max-content] bg-[--btn-color] text-[white] py-4 px-8 rounded-md font-bold flex gap-[1rem]">
-          <Image src={Phone} width={20} height={20} />
+          <Image src={Phone} alt="/" width={20} height={20} />
             <button >
               {phone}
             </button>

@@ -60,7 +60,7 @@ const About = ({ range, link, subheading, sheetId }) => {
             <h3 className="font-bold mb-[0.5rem] text-xl leading-[1.25em] sm:text-xl">
               {subheading}
             </h3>
-            <Image src={shape} className="absolute top-[-1rem] left-[3%]" />
+            <Image src={shape} alt="/" className="absolute top-[-1rem] left-[3%]" />
           </div>
           <h2 className="font-bold mb-[0.75rem] text-4xl leading-[1.25em] sm:text-4xl">
             {heading}

@@ -63,7 +63,7 @@ const FAQS = ({ city, stateId,sheetId }) => {
                   {question}
                 </h3>
                 {
-                  index==position ? <Image src={up} width={12} height={12} /> :<Image src={down} width={12} height={12} />
+                  index==position ? <Image src={up} alt="/" width={12} height={12} /> :<Image src={down} alt="/" width={12} height={12} />
                 }
               </div>
               {index == position && (
